@@ -1,22 +1,22 @@
 <template>
   <div>
-    <div class="flex justify-start">
+    <div class="flex justify-end absolute left-[33%] top-[1%]">
       <div>
         <h2>Weekends :</h2>
       </div>
       <div>
         <Switch
           @click="showWeekEnd()"
-          v-model="enabled"
+          v-model="calendarOptions.weekends"
           :class="[
-            enabled ? 'bg-indigo-600' : 'bg-gray-200',
+            calendarOptions.weekends ? 'bg-indigo-600' : 'bg-gray-200',
             'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
           ]"
         >
           <span
             aria-hidden="true"
             :class="[
-              enabled ? 'translate-x-5' : 'translate-x-0',
+              calendarOptions.weekends ? 'translate-x-5' : 'translate-x-0',
               'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
             ]"
           />
@@ -35,20 +35,19 @@ import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-const enabled = ref(false);
-
 const calendarOptions = reactive({
   plugins: [dayGridPlugin, timeGridPlugin],
   initialView: "dayGridMonth",
-  weekends: enabled.value,
+  weekends: false,
   headerToolbar: {
     start: "prev,next today",
     center: "title",
     end: "dayGridMonth,timeGridWeek,timeGridDay",
   },
+  selectable: true,
   events: [{ start: new Date() }],
 });
 const showWeekEnd = () => {
-  (enabled.value = !enabled.value), (calendarOptions.weekends = enabled.value);
+  calendarOptions.weekends = !calendarOptions.weekends;
 };
 </script>
