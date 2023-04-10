@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="flex justify-end absolute left-[33%] top-[1%]">
+      <!-- Weekends label starts here -->
       <div>
         <h2>Weekends :</h2>
       </div>
+      <!-- To show toggle button to display weekends-->
       <div>
         <Switch
           @click="showWeekEnd()"
@@ -23,6 +25,7 @@
         </Switch>
       </div>
     </div>
+    <!-- Displaying Calendar view from FullCalendar Component -->
     <div>
       <FullCalendar :options="calendarOptions" />
     </div>
@@ -35,6 +38,7 @@ import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
+//Forming calendar options
 const calendarOptions = reactive({
   plugins: [dayGridPlugin, timeGridPlugin],
   initialView: "dayGridMonth",
@@ -47,6 +51,8 @@ const calendarOptions = reactive({
   selectable: true,
   events: [{ start: new Date() }],
 });
+
+//Click action to show weekends
 const showWeekEnd = () => {
   calendarOptions.weekends = !calendarOptions.weekends;
 };
