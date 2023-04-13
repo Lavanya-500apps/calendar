@@ -58,6 +58,7 @@ interface calendarOptions {
   selectable: boolean;
   editable: boolean;
   events: Array<[]>;
+  dayMaxEvents: Number;
 }
 const props = withDefaults(defineProps<calendarOptions>(), {
   plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin], //Plugins To show month,week,day view
@@ -71,11 +72,19 @@ const props = withDefaults(defineProps<calendarOptions>(), {
   editable: true, // important for activating date selectability!
   selectable: true, // important for activating event interactions!
   events: [], //static events
+  dayMaxEvents: "",
 });
 
 //using props by assiging them to new instance
-const { plugins, initialView, headerToolbar, selectable, editable, events } =
-  toRefs(props);
+const {
+  plugins,
+  initialView,
+  headerToolbar,
+  selectable,
+  editable,
+  events,
+  dayMaxEvents,
+} = toRefs(props);
 
 let weekend = ref(props.weekends);
 
@@ -87,6 +96,7 @@ const options = computed(() => ({
   selectable: selectable.value,
   editable: editable.value,
   events: events.value,
+  dayMaxEvents: dayMaxEvents.value,
 }));
 
 //Click action to show weekends
