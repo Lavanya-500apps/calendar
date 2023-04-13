@@ -28,8 +28,8 @@
     <!-- Displaying Calendar view from FullCalendar Component -->
     <div>
       <FullCalendar :options="options">
+        <!-- Added scoped slot for events -->
         <template v-slot:eventContent="arg">
-          <!-- To display the content -->
           <i>{{ arg.event.title }}</i>
         </template>
       </FullCalendar>
@@ -71,8 +71,8 @@ const props = withDefaults(defineProps<calendarOptions>(), {
   }, //To display in headers
   editable: true, // important for activating date selectability!
   selectable: true, // important for activating event interactions!
-  events: [], //static events
-  dayMaxEvents: "",
+  events: [], //To store events in events array
+  dayMaxEvents: "", //To display +more option when events reach their maximum limit
 });
 
 //using props by assiging them to new instance
