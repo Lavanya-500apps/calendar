@@ -120,7 +120,7 @@
     </TransitionRoot>
     <!-- End of sidebar -->
     <!-- import calendar component to show calendar view -->
-    <collectionDemoCalendar v-if="show" :events="events" />
+    <collectionCalendar v-if="show" :events="events" />
   </div>
 </template>
 

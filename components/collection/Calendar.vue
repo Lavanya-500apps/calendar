@@ -27,7 +27,12 @@
     </div>
     <!-- Displaying Calendar view from FullCalendar Component -->
     <div>
-      <FullCalendar :options="options" />
+      <FullCalendar :options="options">
+        <template v-slot:eventContent="arg">
+          <!-- To display the content -->
+          <i>{{ arg.event.title }}</i>
+        </template>
+      </FullCalendar>
     </div>
   </div>
 </template>
@@ -74,11 +79,6 @@ const { plugins, initialView, headerToolbar, selectable, editable, events } =
 
 let weekend = ref(props.weekends);
 
-//eventDetails to Get Events
-onMounted(() => {
-  eventDetails();
-});
-
 const options = computed(() => ({
   plugins: plugins.value,
   initialView: initialView.value,
@@ -87,56 +87,10 @@ const options = computed(() => ({
   selectable: selectable.value,
   editable: editable.value,
   events: events.value,
-  select: handleDateSelect,
-  eventClick: handleEventClick,
-  eventsSet: handleEvents,
 }));
 
 //Click action to show weekends
 const showWeekEnd = () => {
   weekend.value = !weekend.value;
-};
-
-//Get Event data from localstorage
-const eventDetails = () => {
-  const getEventDetails = localStorage.getItem("eventData");
-  if (getEventDetails && getEventDetails.length)
-    options.events = JSON.parse(getEventDetails);
-};
-
-//Get Selected date information and added events
-const handleDateSelect = (selectInfo: any) => {
-  let title = ref(prompt("Please enter a new title for your event"));
-  let calendarApi = selectInfo.view.calendar;
-  calendarApi.unselect(); // clear date selection
-  if (title.value) {
-    calendarApi.addEvent({
-      id: "",
-      title: title.value,
-      start: selectInfo.startStr,
-      end: selectInfo.endStr,
-      allDay: selectInfo.allDay,
-    });
-  }
-};
-
-//add new events to events and set events to localstorage
-const handleEvents = (event: any) => {
-  options.events = event;
-  localStorage.setItem("eventData", JSON.stringify(options.events));
-  eventDetails();
-};
-
-//Delete Event from events
-const handleEventClick = (clickInfo: any) => {
-  if (
-    confirm(
-      `Are you sure you want to delete the event '${clickInfo.event.title}'`
-    )
-  ) {
-    clickInfo.event.remove();
-    localStorage.setItem("eventData", JSON.stringify(options.events));
-    eventDetails();
-  }
 };
 </script>
