@@ -29,8 +29,8 @@
     <div>
       <FullCalendar :options="options">
         <!-- Added scoped slot for events -->
-        <template v-slot:eventContent="arg">
-          <i>{{ arg.event.title }}</i>
+        <template #eventContent="arg">
+          <slot name="calendar_event" v-bind="arg"></slot>
         </template>
       </FullCalendar>
     </div>
