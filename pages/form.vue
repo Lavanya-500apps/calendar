@@ -1,5 +1,5 @@
 <template>
   <div>
-    <collectionDemoCalendar />
+    <collectionForm />
   </div>
 </template>

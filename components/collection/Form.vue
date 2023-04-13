@@ -31,7 +31,7 @@
               >
                 <DialogPanel class="pointer-events-auto w-screen max-w-md">
                   <form
-                    @submit.prevent
+                    @submit.prevent="saveEvent"
                     class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl"
                   >
                     <div class="h-0 flex-1 overflow-y-auto">
@@ -69,8 +69,8 @@
                                 <input
                                   required
                                   type="text"
-                                  id="name"
-                                  v-model="form.event"
+                                  id="title"
+                                  v-model="form.title"
                                   class="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                   placeholder="Enter Event Name"
                                 />
@@ -86,7 +86,7 @@
                               <input
                                 required
                                 type="date"
-                                id="name"
+                                id="date"
                                 v-model="form.date"
                                 class="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                               />
@@ -104,7 +104,6 @@
                         Cancel
                       </button>
                       <button
-                        @click="saveEvent()"
                         type="submit"
                         class="ml-4 inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
@@ -120,6 +119,8 @@
       </Dialog>
     </TransitionRoot>
     <!-- End of sidebar -->
+    <!-- import calendar component to show calendar view -->
+    <collectionDemoCalendar v-if="show" :events="events" />
   </div>
 </template>
 
@@ -132,16 +133,32 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 
 const open = ref(false);
-const emit = defineEmits(["event-form"]);
-const form = reactive({
-  event: "",
+const show = ref(false);
+let events = ref([]);
+const form = ref({
+  title: "",
   date: "",
 });
+//eventDetails to Get Events
+onMounted(() => {
+  eventDetails();
+  show.value = true;
+});
+
+//Get Event data from localstorage
+const eventDetails = () => {
+  const getEventDetails = localStorage.getItem("eventData");
+  if (getEventDetails && getEventDetails.length)
+    events.value = JSON.parse(getEventDetails);
+};
+//add new events to events and set events to localstorage
 const saveEvent = () => {
-  emit("event-form", form);
+  events.value.push(form.value);
+  localStorage.setItem("eventData", JSON.stringify(events.value));
   open.value = false;
+  form.value = {};
 };
 </script>

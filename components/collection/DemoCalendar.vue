@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- import events form  -->
-    <collectionForm @event-form="addEvent" />
     <div class="flex justify-end absolute left-[33%] top-[1%]">
       <!-- Weekends label starts here -->
       <div>
@@ -29,7 +27,12 @@
     </div>
     <!-- Displaying Calendar view from FullCalendar Component -->
     <div>
-      <FullCalendar :options="options" />
+      <FullCalendar :options="options">
+        <template v-slot:eventContent="arg">
+          <!-- To display the content -->
+          <i>{{ arg.event.title }}</i>
+        </template>
+      </FullCalendar>
     </div>
   </div>
 </template>
@@ -75,7 +78,6 @@ const { plugins, initialView, headerToolbar, selectable, editable, events } =
   toRefs(props);
 
 let weekend = ref(props.weekends);
-let eventsData = reactive(props.events);
 
 const options = computed(() => ({
   plugins: plugins.value,
@@ -84,15 +86,11 @@ const options = computed(() => ({
   headerToolbar: headerToolbar.value,
   selectable: selectable.value,
   editable: editable.value,
-  events: eventsData,
+  events: events.value,
 }));
 
 //Click action to show weekends
 const showWeekEnd = () => {
   weekend.value = !weekend.value;
-};
-const addEvent = (form: object) => {
-  eventsData = form;
-  console.log("eventsData", eventsData, "form", form);
 };
 </script>
