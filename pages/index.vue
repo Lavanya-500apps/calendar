@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Add Event button  -->
-    <div class="flex justify-end absolute left-[10%] top-0.5%]">
+    <div class="flex justify-end absolute left-[84%] top-0.5%]">
       <button
         @click="open = true"
         type="button"
@@ -55,9 +55,7 @@
                       </div>
                       <div class="flex flex-1 flex-col justify-between">
                         <div class="divide-y divide-gray-200 px-4 sm:px-6">
-                          <div
-                            class="relative mt-6 flex-1 px-4 sm:px-6 border ml-2 mr-2"
-                          >
+                          <div class="relative mt-6 flex-1 px-4 ml-2 mr-2">
                             <div class="mt-2">
                               <label
                                 for="name"

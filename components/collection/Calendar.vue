@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-end absolute left-[33%] top-[1%]">
+    <div class="flex justify-end absolute left-[10%] top-[1%]">
       <!-- Weekends label starts here -->
       <div>
         <h2>Weekends :</h2>
